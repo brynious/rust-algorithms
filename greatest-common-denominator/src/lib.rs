@@ -14,7 +14,6 @@ fn parse_line(line: String) -> Vec<u64> {
         .map(|x| x.parse::<i64>().unwrap().abs() as u64)
         .collect();
     int_vec.retain(|x| *x != 0);
-    // int_vec.sort();
 
     int_vec
 }
@@ -23,14 +22,11 @@ fn parse_line(line: String) -> Vec<u64> {
 pub fn gcd(input: String) -> u64 {
     let int_vec: Vec<u64> = parse_line(input);
 
-    // println!("{:?}", int_vec);
-
     let mut start = int_vec[0];
     let mut second = 1;
     let stop = int_vec.len();
 
     while second != stop && start != 1 {
-        // println!("{:?}, {:?}, {:?}", start, second, stop);
         start = euclidean_alg(start, int_vec[second]);
         second += 1;
     }
@@ -48,6 +44,6 @@ mod tests {
         assert_eq!(gcd("15 0 -5".to_string()), 5);
         assert_eq!(gcd("6 20 25 5 30".to_string()), 1);
         assert_eq!(gcd("        5 20".to_string()), 5);
-        // assert_eq!(gcd("     28 21952 49 294 3822".to_string()), 7);
+        assert_eq!(gcd("     28 21952 49 294 3822".to_string()), 7);
     }
 }
