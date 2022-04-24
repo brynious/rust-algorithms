@@ -1,26 +1,41 @@
-// fn euclidean_alg(a: , b) {
+fn euclidean_alg(a: u64, b: u64) -> u64 {
+    let mut x = a;
+    let mut y = b;
+    while y != 0 {
+        (x, y) = (y, x % y);
+    }
+    x
+}
 
-// }
-
-#[allow(unused_variables)]
-pub fn gcd(input: String) -> i64 {
-    let mut int_vec: Vec<i64> = input
+fn parse_line(line: String) -> Vec<u64> {
+    let mut int_vec: Vec<u64> = line
         .trim()
         .split_whitespace()
-        .map(|x| x.parse::<i64>().unwrap().abs())
+        .map(|x| x.parse::<i64>().unwrap().abs() as u64)
         .collect();
     int_vec.retain(|x| *x != 0);
-    int_vec.sort();
+    // int_vec.sort();
 
-    if int_vec.len() == 0 {
-        return 0;
+    int_vec
+}
+
+#[allow(unused_variables)]
+pub fn gcd(input: String) -> u64 {
+    let int_vec: Vec<u64> = parse_line(input);
+
+    // println!("{:?}", int_vec);
+
+    let mut start = int_vec[0];
+    let mut second = 1;
+    let stop = int_vec.len();
+
+    while second != stop && start != 1 {
+        // println!("{:?}, {:?}, {:?}", start, second, stop);
+        start = euclidean_alg(start, int_vec[second]);
+        second += 1;
     }
 
-    let current_gcd: i64 = int_vec[0];
-
-    
-
-    int_vec[0]
+    start
 }
 
 #[cfg(test)]
@@ -28,12 +43,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn gcd_works() {
         assert_eq!(gcd("-2 4   8".to_string()), 2);
-        // assert_eq!(gcd("15 0 -5".to_string()), 5);
-        // assert_eq!(gcd("6 20 25 5 30".to_string()), 1);
+        assert_eq!(gcd("15 0 -5".to_string()), 5);
+        assert_eq!(gcd("6 20 25 5 30".to_string()), 1);
+        assert_eq!(gcd("        5 20".to_string()), 5);
         // assert_eq!(gcd("     28 21952 49 294 3822".to_string()), 7);
-        assert_eq!(102 % 10, 2);
-
     }
 }
