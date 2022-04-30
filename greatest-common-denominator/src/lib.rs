@@ -19,8 +19,8 @@ fn parse_line(line: String) -> Vec<usize> {
 }
 
 #[allow(unused_variables)]
-pub fn gcd(input: String) -> usize {
-    let int_vec: Vec<usize> = parse_line(input);
+pub fn gcd(input: &str) -> usize {
+    let int_vec: Vec<usize> = parse_line(input.to_string());
 
     let mut start: usize = int_vec[0] as usize;
     let mut second = 1;
@@ -40,13 +40,13 @@ mod tests {
 
     #[test]
     fn gcd_works() {
-        assert_eq!(gcd("-2 4   8".to_string()), 2);
-        assert_eq!(gcd("15 0 -5".to_string()), 5);
-        assert_eq!(gcd("6 20 25 5 30".to_string()), 1);
-        assert_eq!(gcd("        5 20".to_string()), 5);
-        assert_eq!(gcd("     28 21952      49 294 3822".to_string()), 7);
+        assert_eq!(gcd("-2 4   8"), 2);
+        assert_eq!(gcd("15 0 -5"), 5);
+        assert_eq!(gcd("6 20 25 5 30"), 1);
+        assert_eq!(gcd("        5 20"), 5);
+        assert_eq!(gcd("     28 21952      49 294 3822"), 7);
         assert_eq!(
-            gcd("10_000_000_000_000_000 100_000_000_000_000_000".to_string()),
+            gcd("10_000_000_000_000_000 100_000_000_000_000_000"),
             10000000000000000
         );
     }
