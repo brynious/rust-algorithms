@@ -19,16 +19,15 @@ fn calc_digits_to_tip(num: usize) -> usize {
 }
 
 #[allow(dead_code)]
-fn find_range(mut start: usize, mut target: usize, mut stop: usize) -> (usize, usize, usize) {
-    let _lower_bound = calc_digits_to_tip(start);
+fn find_range(start: usize, target: usize, stop: usize) -> (usize, usize, usize) {
     let new_range = (stop - start) / 2;
     let middle_bound = calc_digits_to_tip(start + new_range);
 
     while stop - start > 1 {
         if target <= middle_bound {
-            (start, target, stop) = find_range(start, target, start + new_range);
+            return find_range(start, target, start + new_range);
         } else {
-            (start, target, stop) = find_range(start + new_range, target, stop);
+            return find_range(start + new_range, target, stop);
         }
     }
 
