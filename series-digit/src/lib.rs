@@ -1,25 +1,22 @@
-#[allow(dead_code)]
-fn triangle_num(i: usize) -> usize {
+fn triangle_num(i: u128) -> u128 {
     i * (i + 1) / 2
 }
 
-#[allow(dead_code)]
 // returns number of digits in numbers range i.e. 3 = 112123 >> 6 digits
-fn calc_digits_to_tip(num: usize) -> usize {
+fn calc_digits_to_tip(num: u128) -> u128 {
     let mut answer = triangle_num(num);
 
     for n in 1..(num.to_string().len()) {
         // create integer of length n of only digit 9
         let nines_vector: Vec<char> = vec!['9'; n];
-        let nines_int: usize = nines_vector.iter().collect::<String>().parse().unwrap();
+        let nines_int: u128 = nines_vector.iter().collect::<String>().parse().unwrap();
 
         answer += triangle_num(num - nines_int)
     }
     answer
 }
 
-#[allow(dead_code)]
-fn find_range(start: usize, target: usize, stop: usize) -> (usize, usize, usize) {
+fn find_range(start: u128, target: u128, stop: u128) -> (u128, u128, u128) {
     let new_range = (stop - start) / 2;
     let middle_bound = calc_digits_to_tip(start + new_range);
 
@@ -34,7 +31,6 @@ fn find_range(start: usize, target: usize, stop: usize) -> (usize, usize, usize)
     (start, target, stop)
 }
 
-#[allow(dead_code)]
 fn brute_get_series_nth_digit(num: usize) -> Option<u32> {
     let mut num_string: String = String::from("");
     for i in 1..=num {
@@ -50,12 +46,12 @@ fn brute_get_series_nth_digit(num: usize) -> Option<u32> {
 }
 
 #[allow(dead_code)]
-fn locate_digit(integer: usize) -> Option<u32> {
+fn locate_digit(integer: u128) -> Option<u32> {
     let variance = find_range(0, integer, integer);
-    let digit: usize = integer - calc_digits_to_tip(variance.0);
+    let digit: u128 = integer - calc_digits_to_tip(variance.0);
 
     if digit.to_string().len() > 1 {
-        return brute_get_series_nth_digit(digit);
+        return brute_get_series_nth_digit(digit as usize);
     } else {
         return Some(digit as u32);
     }
@@ -113,14 +109,21 @@ mod tests {
         assert_eq!(locate_digit(3), Some(2));
         assert_eq!(locate_digit(4), Some(1));
         assert_eq!(locate_digit(10), Some(4));
-        assert_eq!(locate_digit(10usize.pow(2)), Some(1));
-        assert_eq!(locate_digit(10usize.pow(3)), Some(4));
-        assert_eq!(locate_digit(10usize.pow(4)), Some(9));
-        assert_eq!(locate_digit(10usize.pow(5)), Some(2));
-        assert_eq!(locate_digit(10usize.pow(6)), Some(6));
-        assert_eq!(locate_digit(10usize.pow(7)), Some(2));
-        assert_eq!(locate_digit(10usize.pow(8)), Some(6));
-        assert_eq!(locate_digit(10usize.pow(9)), Some(8));
-        // assert_eq!(locate_digit(10usize.pow(10)), Some(1));
+        assert_eq!(locate_digit(10u128.pow(2)), Some(1));
+        assert_eq!(locate_digit(10u128.pow(3)), Some(4));
+        assert_eq!(locate_digit(10u128.pow(4)), Some(9));
+        assert_eq!(locate_digit(10u128.pow(5)), Some(2));
+        assert_eq!(locate_digit(10u128.pow(6)), Some(6));
+        assert_eq!(locate_digit(10u128.pow(7)), Some(2));
+        assert_eq!(locate_digit(10u128.pow(8)), Some(6));
+        assert_eq!(locate_digit(10u128.pow(9)), Some(8));
+        assert_eq!(locate_digit(10u128.pow(10)), Some(1));
+        // assert_eq!(locate_digit(10u128.pow(11)), Some(1));
+        // assert_eq!(locate_digit(10u128.pow(12)), Some(9));
+        // assert_eq!(locate_digit(10u128.pow(13)), Some(8));
+        // assert_eq!(locate_digit(10u128.pow(14)), Some(3));
+        // assert_eq!(locate_digit(10u128.pow(15)), Some(7));
+        // assert_eq!(locate_digit(10u128.pow(16)), Some(6));
+        // assert_eq!(locate_digit(10u128.pow(17)), Some(1));
     }
 }
